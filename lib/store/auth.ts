@@ -39,7 +39,7 @@ export const useAuthStore = create<AuthStore>()(
           localStorage.setItem('accessToken', accessToken);
           localStorage.setItem('refreshToken', refreshToken);
         } catch (error: any) {
-          const message = error.response?.data?.error || 'Login failed';
+          const message = error?.response?.data?.error || error?.message || 'Login failed';
           set({
             error: message,
             isLoading: false,
@@ -66,7 +66,7 @@ export const useAuthStore = create<AuthStore>()(
           localStorage.setItem('accessToken', accessToken);
           localStorage.setItem('refreshToken', refreshToken);
         } catch (error: any) {
-          const message = error.response?.data?.error || 'Registration failed';
+          const message = error?.response?.data?.error || error?.message || 'Registration failed';
           set({
             error: message,
             isLoading: false,
