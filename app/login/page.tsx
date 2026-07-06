@@ -55,6 +55,20 @@ export default function LoginPage() {
     }
   };
 
+  const handleDemoLogin = async () => {
+    clearError();
+    const demoEmail = 'demo@church.com';
+    const demoPassword = 'demo123';
+
+    try {
+      await login(demoEmail, demoPassword);
+      addNotification({ type: 'SUCCESS', title: 'Demo Login', message: 'Logged in as demo user' });
+      router.push('/dashboard');
+    } catch (error) {
+      addNotification({ type: 'ERROR', title: 'Login Failed', message: error instanceof Error ? error.message : 'An error occurred' });
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
@@ -136,6 +150,16 @@ export default function LoginPage() {
               ) : (
                 'Sign In'
               )}
+            </Button>
+
+            <Button
+              type="button"
+              disabled={isLoading}
+              onClick={handleDemoLogin}
+              variant="ghost"
+              className="w-full mt-2 text-sm text-blue-600 hover:text-blue-700"
+            >
+              Use demo account
             </Button>
           </form>
 

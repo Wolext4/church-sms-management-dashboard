@@ -54,8 +54,14 @@ apiClient.interceptors.response.use(
 
 // Auth API
 export const authAPI = {
-  login: (email: string, password: string) =>
-    isDemo ? mockAuthAPI.login(email, password) : apiClient.post(API_ENDPOINTS.AUTH_LOGIN, { email, password }),
+  login: (email: string, password: string) => {
+    // Always allow the built-in demo credentials to login via the mock API
+    if (email === 'demo@church.com' && password === 'demo123') {
+      return mockAuthAPI.login(email, password);
+    }
+
+    return isDemo ? mockAuthAPI.login(email, password) : apiClient.post(API_ENDPOINTS.AUTH_LOGIN, { email, password });
+  },
 
   register: (email: string, password: string, firstName: string, lastName: string) =>
     isDemo ? mockAuthAPI.register(email, password, firstName, lastName) : apiClient.post(API_ENDPOINTS.AUTH_REGISTER, {
