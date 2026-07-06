@@ -102,6 +102,17 @@ const defaultDb = {
     createdAt: now(),
     updatedAt: now(),
   },
+  settings: {
+    id: 'settings-1',
+    churchId: 'church-1',
+    theme: 'auto',
+    smsNotifications: true,
+    emailNotifications: true,
+    language: 'en',
+    timezone: 'UTC',
+    createdAt: now(),
+    updatedAt: now(),
+  },
 };
 
 function loadDb() {
@@ -393,56 +404,25 @@ export const mockChurchAPI = {
 };
 
 export const mockAuditLogsAPI = {
-  getLogs: async () => {
-    await new Promise((resolve) => setTimeout(resolve, 400));
-    return {
-      data: {
-        data: [
-          {
-            id: 'log-1',
-            action: 'CREATE',
-            entityType: 'Template',
-            entityId: 'template-1',
-            userId: 'user-1',
-            changes: { name: 'Service Reminder' },
-            timestamp: new Date().toISOString(),
-            ipAddress: '192.168.1.10',
-            userAgent: 'Mozilla/5.0',
-          },
-          {
-            id: 'log-2',
-            action: 'SEND',
-            entityType: 'SMS',
-            entityId: 'sms-1',
-            userId: 'user-2',
-            changes: { recipients: 42 },
-            timestamp: new Date(Date.now() - 86400000).toISOString(),
-            ipAddress: '192.168.1.12',
-            userAgent: 'Mozilla/5.0',
-          },
-        ],
-      },
-    };
+  getLogs: async (page = 1, pageSize = 10) => {
+    await new Promise((resolve) => setTimeout(resolve, 200));
+    const db = loadDb();
+    const start = (page - 1) * pageSize;
+    const data = db.auditLogs.slice(start, start + pageSize);
+    return { data: { data } };
   },
 };
 
 export const mockSettingsAPI = {
   get: async () => {
-    await new Promise((resolve) => setTimeout(resolve, 400));
-    return {
-      data: {
-        id: 'settings-1',
-        churchId: 'church-1',
-        theme: 'auto',
-        smsNotifications: true,
-        emailNotifications: true,
-        language: 'en',
-        timezone: 'UTC',
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      },
-    };
+    await new Promise((resolve) => setTimeout(resolve, 150));
+    const db = loadDb();
+    return { data: db.settings };
   },
-
-  update: async () => ({ data: { success: true } }),
+  update: async (data: any) => {
+    const db = loadDb();
+    Object.assign(db.settings, data, { updatedAt: now() });
+    saveDb(db);
+    return { data: { success: true } };
+  },
 };

@@ -11,8 +11,13 @@ import {
   mockUsersAPI,
 } from './mock-api';
 
-// Use mock APIs when demo mode is explicitly enabled or when running in development locally.
-const isDemo = process.env.NEXT_PUBLIC_DEMO_MODE === 'true' || process.env.NODE_ENV === 'development';
+// Use mock APIs when demo mode is explicitly enabled, when running in development locally,
+// when a deploy-time flag `NEXT_PUBLIC_FORCE_MOCK` is set, or when the user appends `?demo=true` to the URL.
+const isDemo =
+  process.env.NEXT_PUBLIC_DEMO_MODE === 'true' ||
+  process.env.NEXT_PUBLIC_FORCE_MOCK === 'true' ||
+  process.env.NODE_ENV === 'development' ||
+  (typeof window !== 'undefined' && new URL(window.location.href).searchParams.get('demo') === 'true');
 
 // Create axios instance
 const apiClient: AxiosInstance = axios.create({
