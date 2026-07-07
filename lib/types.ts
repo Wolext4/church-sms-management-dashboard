@@ -178,7 +178,6 @@ export interface PaginatedResponse<T> {
 export interface AppSettings {
   id: string;
   churchId: string;
-  theme: 'light' | 'dark' | 'auto';
   smsNotifications: boolean;
   emailNotifications: boolean;
   language: string;

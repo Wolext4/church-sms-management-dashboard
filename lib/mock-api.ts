@@ -105,11 +105,10 @@ const defaultDb = {
   settings: {
     id: 'settings-1',
     churchId: 'church-1',
-    theme: 'auto',
     smsNotifications: true,
     emailNotifications: true,
     language: 'en',
-    timezone: 'UTC',
+    timezone: 'Africa/Lagos',
     createdAt: now(),
     updatedAt: now(),
   },
