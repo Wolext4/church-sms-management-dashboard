@@ -11,16 +11,9 @@ import {
   mockUsersAPI,
 } from './mock-api';
 
-// Use local mock APIs by default, including after deployment, unless a remote API mode is explicitly enabled.
-// Set `NEXT_PUBLIC_USE_REMOTE_API=true` to connect to the configured API backend instead.
-const isDemo =
-  process.env.NEXT_PUBLIC_USE_REMOTE_API !== 'true' &&
-  (
-    process.env.NEXT_PUBLIC_DEMO_MODE === 'true' ||
-    process.env.NEXT_PUBLIC_FORCE_MOCK === 'true' ||
-    process.env.NODE_ENV === 'development' ||
-    (typeof window !== 'undefined' && new URL(window.location.href).searchParams.get('demo') === 'true')
-  );
+// Use local mock data by default for both dev and deployed sites.
+// Only use a real backend when `NEXT_PUBLIC_USE_REMOTE_API=true` is set.
+const isDemo = process.env.NEXT_PUBLIC_USE_REMOTE_API !== 'true';
 
 // Create axios instance
 const apiClient: AxiosInstance = axios.create({
