@@ -73,8 +73,8 @@ export function Sidebar({ mobileOpen, onClose }: { mobileOpen?: boolean; onClose
         {/* Logo */}
         <div className="p-6 border-b border-gray-200">
           <Link href="/dashboard" className="flex items-center gap-2 cursor-pointer">
-            <div className="p-2 bg-blue-600 rounded-lg">
-              <MessageCircle className="w-5 h-5 text-white" />
+            <div className="p-1 bg-blue-600 rounded-lg">
+              <img src="/RH.png" alt="Redemption House" className="w-10 h-10 object-contain" />
             </div>
             <div>
               <h1 className="font-bold text-gray-900">Redemption House</h1>
@@ -157,8 +157,8 @@ export function Sidebar({ mobileOpen, onClose }: { mobileOpen?: boolean; onClose
           <div className="absolute left-0 top-0 h-full w-64 bg-white border-r border-gray-200 p-4 overflow-auto">
             <div className="flex items-center justify-between mb-4">
               <Link href="/dashboard" onClick={onClose} className="flex items-center gap-2 cursor-pointer">
-                <div className="p-2 bg-blue-600 rounded-lg">
-                  <MessageCircle className="w-5 h-5 text-white" />
+                <div className="p-1 bg-blue-600 rounded-lg">
+                  <img src="/RH.png" alt="Redemption House" className="w-10 h-10 object-contain" />
                 </div>
                 <div>
                   <h1 className="font-bold text-gray-900">Redemption House</h1>
