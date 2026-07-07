@@ -11,13 +11,16 @@ import {
   mockUsersAPI,
 } from './mock-api';
 
-// Use mock APIs when demo mode is explicitly enabled, when running in development locally,
-// when a deploy-time flag `NEXT_PUBLIC_FORCE_MOCK` is set, or when the user appends `?demo=true` to the URL.
+// Use local mock APIs by default, including after deployment, unless a remote API mode is explicitly enabled.
+// Set `NEXT_PUBLIC_USE_REMOTE_API=true` to connect to the configured API backend instead.
 const isDemo =
-  process.env.NEXT_PUBLIC_DEMO_MODE === 'true' ||
-  process.env.NEXT_PUBLIC_FORCE_MOCK === 'true' ||
-  process.env.NODE_ENV === 'development' ||
-  (typeof window !== 'undefined' && new URL(window.location.href).searchParams.get('demo') === 'true');
+  process.env.NEXT_PUBLIC_USE_REMOTE_API !== 'true' &&
+  (
+    process.env.NEXT_PUBLIC_DEMO_MODE === 'true' ||
+    process.env.NEXT_PUBLIC_FORCE_MOCK === 'true' ||
+    process.env.NODE_ENV === 'development' ||
+    (typeof window !== 'undefined' && new URL(window.location.href).searchParams.get('demo') === 'true')
+  );
 
 // Create axios instance
 const apiClient: AxiosInstance = axios.create({
