@@ -164,12 +164,13 @@ export const usersAPI = {
       params: { page, pageSize },
     }),
 
-  create: (email: string, firstName: string, lastName: string, role: string) =>
+  create: (email: string, firstName: string, lastName: string, role: string, password?: string) =>
     isDemo ? mockUsersAPI.create() : apiClient.post(API_ENDPOINTS.USERS_CREATE, {
       email,
       firstName,
       lastName,
       role,
+      ...(password ? { password } : {}),
     }),
 
   update: (id: string, data: any) =>

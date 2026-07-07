@@ -75,12 +75,12 @@ export default function LoginPage() {
         {/* Header */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-2 mb-4">
-            <div className="p-3 bg-blue-600 rounded-lg">
-              <MessageCircle className="w-6 h-6 text-white" />
+            <div className="w-10 h-10 flex items-center justify-center">
+              <img src="/RH.png" alt="Redemption House" className="w-10 h-10 object-contain" />
             </div>
-            <h1 className="text-2xl font-bold text-gray-900">Church SMS</h1>
+            <h1 className="text-2xl font-bold text-gray-900">Redemption House</h1>
           </div>
-          <p className="text-gray-600">Professional SMS Management</p>
+          <p className="text-gray-600">Redemption House SMS Management</p>
         </div>
 
         {/* Form Card */}
@@ -152,35 +152,10 @@ export default function LoginPage() {
               )}
             </Button>
 
-            <Button
-              type="button"
-              disabled={isLoading}
-              onClick={handleDemoLogin}
-              variant="ghost"
-              className="w-full mt-2 text-sm text-blue-600 hover:text-blue-700"
-            >
-              Use demo account
-            </Button>
+            {/* Demo login removed per request */}
           </form>
 
-          <div className="relative">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-300"></div>
-            </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white text-gray-600">New to Church SMS?</span>
-            </div>
-          </div>
-
-          <Link href="/register">
-            <Button
-              type="button"
-              variant="outline"
-              className="w-full border-gray-300 text-gray-700 hover:bg-gray-50"
-            >
-              Create Account
-            </Button>
-          </Link>
+          {/* Create account removed from login page per request */}
         </div>
 
         {/* Footer */}

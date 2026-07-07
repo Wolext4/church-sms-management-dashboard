@@ -22,6 +22,8 @@ interface UserFormData {
   firstName: string;
   lastName: string;
   role: 'ADMIN' | 'USER' | 'VIEWER';
+  password?: string;
+  confirmPassword?: string;
 }
 
 export default function UsersPage() {
@@ -35,6 +37,8 @@ export default function UsersPage() {
     firstName: '',
     lastName: '',
     role: 'USER',
+    password: '',
+    confirmPassword: '',
   });
 
   useEffect(() => {
@@ -74,6 +78,24 @@ export default function UsersPage() {
       return;
     }
 
+    // If creating a new user, ensure password fields are provided and valid
+    if (!editingId) {
+      if (!formData.password || !formData.confirmPassword) {
+        addNotification({ type: 'ERROR', title: 'Validation Error', message: 'Please provide a password for the new user' });
+        return;
+      }
+
+      if (formData.password !== formData.confirmPassword) {
+        addNotification({ type: 'ERROR', title: 'Validation Error', message: 'Passwords do not match' });
+        return;
+      }
+
+      if (formData.password.length < 8) {
+        addNotification({ type: 'ERROR', title: 'Validation Error', message: 'Password must be at least 8 characters' });
+        return;
+      }
+    }
+
     try {
       if (editingId) {
         await usersAPI.update(editingId, formData);
@@ -83,7 +105,7 @@ export default function UsersPage() {
           message: 'User has been updated successfully',
         });
       } else {
-        await usersAPI.create(formData.email, formData.firstName, formData.lastName, formData.role);
+        await usersAPI.create(formData.email, formData.firstName, formData.lastName, formData.role, formData.password);
         addNotification({
           type: 'SUCCESS',
           title: 'User Created',
@@ -138,6 +160,8 @@ export default function UsersPage() {
       firstName: '',
       lastName: '',
       role: 'USER',
+      password: '',
+      confirmPassword: '',
     });
     setEditingId(null);
     setShowForm(false);
@@ -238,6 +262,41 @@ export default function UsersPage() {
               </select>
             </div>
 
+            {!editingId && (
+              <>
+                <div>
+                  <Label htmlFor="password" className="text-sm font-medium">
+                    Password
+                  </Label>
+                  <Input
+                    id="password"
+                    name="password"
+                    type="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    placeholder="••••••••"
+                    className="mt-1"
+                  />
+                  <p className="text-xs text-gray-500 mt-1">At least 8 characters</p>
+                </div>
+
+                <div>
+                  <Label htmlFor="confirmPassword" className="text-sm font-medium">
+                    Confirm Password
+                  </Label>
+                  <Input
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    type="password"
+                    value={formData.confirmPassword}
+                    onChange={handleChange}
+                    placeholder="••••••••"
+                    className="mt-1"
+                  />
+                </div>
+              </>
+            )}
+
             <div className="flex gap-3 pt-4">
               <Button
                 type="submit"
@@ -270,8 +329,8 @@ export default function UsersPage() {
           </div>
         ) : (
           <>
-            <div className="overflow-x-auto">
-              <table className="w-full">
+              <div className="hidden md:block overflow-x-auto">
+                <table className="w-full">
                 <thead className="bg-gray-50 border-b border-gray-200">
                   <tr>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
@@ -336,7 +395,40 @@ export default function UsersPage() {
                   ))}
                 </tbody>
               </table>
-            </div>
+              </div>
+
+              {/* Mobile list */}
+              <div className="md:hidden p-4 space-y-3">
+                {users.map((user) => (
+                  <div key={user.id} className="bg-white border border-gray-200 rounded-lg p-4">
+                    <div className="flex items-start justify-between">
+                      <div>
+                        <p className="font-medium text-gray-900">{user.firstName} {user.lastName}</p>
+                        <p className="text-sm text-gray-600">{user.email}</p>
+                        <p className="text-xs text-gray-500 mt-1">Joined: {new Date(user.createdAt).toLocaleDateString()}</p>
+                      </div>
+                      <div className="flex flex-col items-end gap-2">
+                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                          user.role === 'ADMIN'
+                            ? 'bg-red-50 text-red-700 border border-red-200'
+                            : user.role === 'USER'
+                              ? 'bg-blue-50 text-blue-700 border border-blue-200'
+                              : 'bg-gray-50 text-gray-700 border border-gray-200'
+                        }`}>{user.role}</span>
+
+                        <div className="flex gap-2 mt-2">
+                          <Button size="sm" onClick={() => handleEdit(user)} className="bg-blue-50 hover:bg-blue-100 text-blue-600 border border-blue-200">
+                            <Edit2 className="w-4 h-4" />
+                          </Button>
+                          <Button size="sm" onClick={() => handleDelete(user.id)} className="bg-red-50 hover:bg-red-100 text-red-600 border border-red-200">
+                            <Trash2 className="w-4 h-4" />
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
           </>
         )}
       </div>

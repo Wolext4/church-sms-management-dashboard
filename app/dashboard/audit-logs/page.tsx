@@ -81,7 +81,8 @@ export default function AuditLogsPage() {
           </div>
         ) : (
           <>
-            <div className="overflow-x-auto">
+            {/* Desktop/tablet: show table */}
+            <div className="hidden md:block overflow-x-auto">
               <table className="w-full">
                 <thead className="bg-gray-50 border-b border-gray-200">
                   <tr>
@@ -149,6 +150,29 @@ export default function AuditLogsPage() {
                   ))}
                 </tbody>
               </table>
+            </div>
+
+            {/* Mobile: stacked cards */}
+            <div className="md:hidden p-4 space-y-3">
+              {logs.map((log) => (
+                <div key={log.id} className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1 pr-4">
+                      <p className="text-sm font-medium text-gray-900 dark:text-gray-100 break-words">{log.entityType} — <span className="text-xs text-gray-500">{log.entityId}</span></p>
+                      <p className="text-sm mt-1 break-words"><span className={`inline-flex px-2 py-0.5 rounded-full text-xs font-medium border ${getActionColor(log.action)}`}>{log.action}</span></p>
+                      <p className="text-xs text-gray-500 mt-2">By: {log.userId.substring(0,8)}... • {new Date(log.timestamp).toLocaleString()}</p>
+                      <p className="text-xs font-mono text-gray-600 mt-2 break-words">IP: {log.ipAddress}</p>
+                    </div>
+                    <div className="flex items-start">
+                      {Object.keys(log.changes).length > 0 ? (
+                        <button onClick={() => console.log('Changes:', log.changes)} className="text-blue-600 hover:text-blue-700 font-medium">View</button>
+                      ) : (
+                        <span className="text-gray-500">-</span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
 
             {/* Pagination */}

@@ -5,7 +5,8 @@ import RootLayoutClient from './layout-client'
 
 export const metadata: Metadata = {
   title: 'Church SMS Manager',
-  description: 'Professional SMS management system for churches',
+  title: 'Redemption House SMS Manager',
+  description: 'Professional SMS management system for Redemption House',
   generator: 'v0.app',
   icons: {
     icon: [
@@ -41,6 +42,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="bg-background">
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </head>
       <body className="antialiased">
         <RootLayoutClient>
           {children}

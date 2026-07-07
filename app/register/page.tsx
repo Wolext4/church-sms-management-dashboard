@@ -83,12 +83,12 @@ export default function RegisterPage() {
         {/* Header */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-2 mb-4">
-            <div className="p-3 bg-blue-600 rounded-lg">
-              <MessageCircle className="w-6 h-6 text-white" />
+            <div className="w-10 h-10 flex items-center justify-center">
+              <img src="/RH.png" alt="Redemption House" className="w-10 h-10 object-contain" />
             </div>
-            <h1 className="text-2xl font-bold text-gray-900">Church SMS</h1>
+            <h1 className="text-2xl font-bold text-gray-900">Redemption House</h1>
           </div>
-          <p className="text-gray-600">Professional SMS Management</p>
+          <p className="text-gray-600">Redemption House SMS Management</p>
         </div>
 
         {/* Form Card */}

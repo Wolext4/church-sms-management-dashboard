@@ -100,16 +100,16 @@ export default function ChurchPage() {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 w-full">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">Church Management</h1>
-        <p className="text-gray-600 mt-2">Manage your church information and members</p>
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Redemption House</h1>
+        <p className="text-gray-600 dark:text-gray-300 mt-2">Manage the church information and members</p>
       </div>
 
       {/* Church Information */}
       {church && (
-        <div className="bg-white rounded-lg border border-gray-200 p-6 space-y-6">
+        <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4 sm:p-6 space-y-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="p-3 bg-blue-50 rounded-lg">
@@ -130,7 +130,7 @@ export default function ChurchPage() {
 
           {editing ? (
             <div className="space-y-4 border-t pt-4">
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <Label htmlFor="name" className="text-sm font-medium">
                     Church Name
@@ -158,7 +158,7 @@ export default function ChurchPage() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <Label htmlFor="phone" className="text-sm font-medium">
                     Phone
@@ -198,7 +198,7 @@ export default function ChurchPage() {
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <Label htmlFor="city" className="text-sm font-medium">
                     City
@@ -225,7 +225,7 @@ export default function ChurchPage() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <Label htmlFor="zipCode" className="text-sm font-medium">
                     Zip Code
@@ -263,30 +263,30 @@ export default function ChurchPage() {
               </div>
             </div>
           ) : (
-            <div className="grid grid-cols-2 gap-6 border-t pt-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 border-t pt-4">
               <div>
-                <p className="text-xs text-gray-600 uppercase font-medium">Email</p>
-                <p className="text-gray-900 mt-1">{church.email}</p>
+                <p className="text-xs text-gray-600 uppercase font-medium dark:text-gray-300">Email</p>
+                <p className="text-gray-900 dark:text-gray-100 mt-1 break-words">{church.email}</p>
               </div>
               <div>
-                <p className="text-xs text-gray-600 uppercase font-medium">Phone</p>
-                <p className="text-gray-900 mt-1">{church.phone}</p>
+                <p className="text-xs text-gray-600 uppercase font-medium dark:text-gray-300">Phone</p>
+                <p className="text-gray-900 dark:text-gray-100 mt-1 break-words">{church.phone}</p>
               </div>
               <div>
-                <p className="text-xs text-gray-600 uppercase font-medium">Website</p>
-                <p className="text-gray-900 mt-1">{church.website || 'N/A'}</p>
+                <p className="text-xs text-gray-600 uppercase font-medium dark:text-gray-300">Website</p>
+                <p className="text-gray-900 dark:text-gray-100 mt-1 break-words">{church.website || 'N/A'}</p>
               </div>
               <div>
-                <p className="text-xs text-gray-600 uppercase font-medium">Address</p>
-                <p className="text-gray-900 mt-1">{church.address}</p>
+                <p className="text-xs text-gray-600 uppercase font-medium dark:text-gray-300">Address</p>
+                <p className="text-gray-900 dark:text-gray-100 mt-1 break-words">{church.address}</p>
               </div>
               <div>
-                <p className="text-xs text-gray-600 uppercase font-medium">City, State</p>
-                <p className="text-gray-900 mt-1">{church.city}, {church.state} {church.zipCode}</p>
+                <p className="text-xs text-gray-600 uppercase font-medium dark:text-gray-300">City, State</p>
+                <p className="text-gray-900 dark:text-gray-100 mt-1 break-words">{church.city}, {church.state} {church.zipCode}</p>
               </div>
               <div>
-                <p className="text-xs text-gray-600 uppercase font-medium">Members</p>
-                <p className="text-gray-900 mt-1">{church.memberCount}</p>
+                <p className="text-xs text-gray-600 uppercase font-medium dark:text-gray-300">Members</p>
+                <p className="text-gray-900 dark:text-gray-100 mt-1">{church.memberCount}</p>
               </div>
             </div>
           )}
@@ -307,8 +307,10 @@ export default function ChurchPage() {
               <p className="text-gray-600">No members yet</p>
             </div>
           ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full">
+            <>
+              {/* Desktop/tablet: show table */}
+              <div className="hidden md:block overflow-x-auto">
+                <table className="w-full">
                 <thead className="bg-gray-50 border-b border-gray-200">
                   <tr>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
@@ -364,8 +366,36 @@ export default function ChurchPage() {
                     </tr>
                   ))}
                 </tbody>
-              </table>
-            </div>
+                </table>
+              </div>
+
+              {/* Mobile: stacked cards */}
+              <div className="md:hidden p-4 space-y-3">
+                {members.map((member) => (
+                  <div key={member.id} className="bg-white border border-gray-200 rounded-lg p-4">
+                    <div className="flex items-start justify-between">
+                      <div className="pr-4 flex-1">
+                        <p className="font-medium text-gray-900 break-words">{member.firstName} {member.lastName}</p>
+                        <p className="text-sm text-gray-600 break-words">{member.email || 'N/A'}</p>
+                        <p className="text-sm text-gray-600 break-words">{member.phone}</p>
+                        <p className="text-xs text-gray-500 mt-2">Joined: {new Date(member.joinDate).toLocaleDateString()}</p>
+                      </div>
+                      <div className="flex flex-col items-end gap-2">
+                        <div className="flex flex-wrap gap-1">
+                          {member.groups.length > 0 ? (
+                            member.groups.map((group) => (
+                              <span key={group} className="text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded border border-blue-200">{group}</span>
+                            ))
+                          ) : (
+                            <span className="text-gray-600">-</span>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </>
           )}
         </div>
       </div>

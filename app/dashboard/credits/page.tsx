@@ -140,7 +140,7 @@ export default function CreditsPage() {
             </div>
           ) : (
             <>
-              <div className="overflow-x-auto">
+              <div className="hidden md:block overflow-x-auto">
                 <table className="w-full">
                   <thead className="bg-gray-50 border-b border-gray-200">
                     <tr>
@@ -215,6 +215,25 @@ export default function CreditsPage() {
                     ))}
                   </tbody>
                 </table>
+              </div>
+
+              {/* Mobile transaction cards */}
+              <div className="md:hidden p-4 space-y-3">
+                {transactions.map((transaction) => (
+                  <div key={transaction.id} className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+                    <div className="flex items-start justify-between">
+                      <div className="flex-1 pr-4">
+                        <p className="text-sm font-medium text-gray-900 dark:text-gray-100">{transaction.type}</p>
+                        <p className="text-sm text-gray-600 dark:text-gray-300 mt-1 break-words">{transaction.description}</p>
+                        <p className="text-sm mt-2"><span className={`${transaction.type === 'USAGE' ? 'text-red-600' : 'text-green-600'} font-medium`}>{transaction.type === 'USAGE' ? '-' : '+'}{transaction.amount}</span></p>
+                        <p className="text-xs text-gray-500 mt-1">{new Date(transaction.transactionDate).toLocaleDateString()}</p>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-sm font-medium text-gray-900 dark:text-gray-100">{transaction.balance}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
 
               {/* Pagination */}

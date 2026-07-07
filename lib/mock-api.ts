@@ -1,7 +1,7 @@
 // Mock API for demo purposes
 import { User } from './types';
 
-const DB_KEY = 'mock_db_v1';
+const DB_KEY = 'mock_db_v2';
 
 const now = () => new Date().toISOString();
 
@@ -89,15 +89,15 @@ const defaultDb = {
   ],
   church: {
     id: 'church-1',
-    name: 'Grace Community Church',
-    email: 'office@gracechurch.org',
-    phone: '+1-555-0100',
-    website: 'https://gracechurch.org',
-    address: '123 Main Street',
-    city: 'Springfield',
-    state: 'IL',
-    zipCode: '62704',
-    country: 'USA',
+    name: 'Redemption House',
+    email: 'info@rccgrh53.org',
+    phone: '(+234) 7000 000 0000',
+    website: 'https://rccgrh53.org/',
+    address: '23/24 Nuru Oniwo St, Surulere, Lagos 101015, Lagos',
+    city: 'Lagos',
+    state: 'Lagos Mainland',
+    zipCode: '101015',
+    country: 'Nigeria',
     memberCount: 420,
     createdAt: now(),
     updatedAt: now(),

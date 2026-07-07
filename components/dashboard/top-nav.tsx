@@ -4,10 +4,10 @@ import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/lib/store/auth';
 import { useNotificationsStore } from '@/lib/store/notifications';
 import { Button } from '@/components/ui/button';
-import { LogOut, User, Bell } from 'lucide-react';
+import { LogOut, User, Bell, Menu } from 'lucide-react';
 import { useState } from 'react';
 
-export function TopNav() {
+export function TopNav({ onMenuToggle }: { onMenuToggle?: () => void }) {
   const router = useRouter();
   const { user, logout } = useAuthStore();
   const { addNotification } = useNotificationsStore();
@@ -32,10 +32,26 @@ export function TopNav() {
   };
 
   return (
-    <div className="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
-      <div>
-        <h2 className="text-lg font-semibold text-gray-900">Welcome back, {user?.firstName}</h2>
-        <p className="text-sm text-gray-600">{user?.email}</p>
+    <div className="bg-white border-b border-gray-200 px-4 sm:px-6 py-4 flex items-center justify-between">
+      <div className="flex items-center gap-3">
+        <button
+          onClick={onMenuToggle}
+          className="p-2 rounded-md hover:bg-gray-100 md:hidden cursor-pointer"
+          aria-label="Open menu"
+        >
+          <Menu className="w-5 h-5 text-gray-700" />
+        </button>
+
+        {/* Compact brand on mobile */}
+        <div className="block md:hidden">
+          <h3 className="text-base font-semibold text-gray-900">Redemption House</h3>
+        </div>
+
+        {/* Welcome text only on md+ */}
+        <div className="hidden md:block">
+          <h2 className="text-lg font-semibold text-gray-900">Welcome back, {user?.firstName}</h2>
+          <p className="text-sm text-gray-600">{user?.email}</p>
+        </div>
       </div>
 
       <div className="flex items-center gap-4">
@@ -51,7 +67,7 @@ export function TopNav() {
         <div className="relative">
           <button
             onClick={() => setShowMenu(!showMenu)}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors"
+            className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer"
           >
             <div className="w-8 h-8 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center">
               <span className="text-white text-sm font-semibold">

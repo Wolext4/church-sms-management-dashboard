@@ -48,7 +48,8 @@ export default function SMSHistoryPage() {
           </div>
         ) : (
           <>
-            <div className="overflow-x-auto">
+            {/* Desktop/tablet: show table */}
+            <div className="hidden md:block overflow-x-auto">
               <table className="w-full">
                 <thead className="bg-gray-50 border-b border-gray-200">
                   <tr>
@@ -115,6 +116,23 @@ export default function SMSHistoryPage() {
                   ))}
                 </tbody>
               </table>
+            </div>
+
+            {/* Mobile cards */}
+            <div className="md:hidden p-4 space-y-3">
+              {history.map((record) => (
+                <div key={record.id} className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1 pr-4">
+                      <p className="font-medium text-gray-900 dark:text-gray-100 break-words">{record.type} • {record.recipients}</p>
+                      <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">Sent: <span className="font-medium text-green-600">{record.messagesSent}</span> • Failed: <span className="text-red-600">{record.messagesFailed}</span></p>
+                      <p className="text-sm text-gray-600 mt-1 break-words">Cost: {record.totalCost} credits</p>
+                      <p className="text-xs text-gray-500 mt-2">{new Date(record.sentAt).toLocaleString()}</p>
+                      <p className="text-sm text-gray-600 mt-1 break-words">By: {record.sentBy.firstName} {record.sentBy.lastName}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
 
             {/* Pagination */}

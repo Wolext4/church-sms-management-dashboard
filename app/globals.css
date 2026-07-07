@@ -159,5 +159,23 @@
   }
   body {
     @apply bg-background text-foreground;
+    /* Prevent horizontal overflow that can force pinch-to-zoom */
+    overflow-x: hidden;
+    width: 100%;
   }
+}
+
+/* Make images and media scale down on mobile to avoid overflow */
+img, video, svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Utility to prevent content overlap due to fixed elements */
+.safe-area {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+html, body, #__next {
+  width: 100%;
 }

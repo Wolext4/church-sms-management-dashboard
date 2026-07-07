@@ -1,21 +1,24 @@
 'use client';
 
-import { ReactNode } from 'react';
+import { ReactNode, useState } from 'react';
 import { ProtectedRoute } from '@/components/auth/protected-route';
 import { Sidebar } from '@/components/dashboard/sidebar';
 import { TopNav } from '@/components/dashboard/top-nav';
+import ResponsiveContainer from '@/components/ui/responsive-container';
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
+  const [mobileOpen, setMobileOpen] = useState(false);
+
   return (
     <ProtectedRoute>
       <div className="flex h-screen bg-gray-50">
-        <Sidebar />
+        <Sidebar mobileOpen={mobileOpen} onClose={() => setMobileOpen(false)} />
         <div className="flex-1 flex flex-col overflow-hidden">
-          <TopNav />
+          <TopNav onMenuToggle={() => setMobileOpen((s) => !s)} />
           <main className="flex-1 overflow-auto">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <ResponsiveContainer className="py-8">
               {children}
-            </div>
+            </ResponsiveContainer>
           </main>
         </div>
       </div>
